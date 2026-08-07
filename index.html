@@ -66,16 +66,17 @@
 
 <style>
   :root{
-    --terracotta:#B6552F;
-    --terracotta-deep:#8F421F;
-    --sand:#DCCBA6;
-    --olive:#4C5638;
-    --cream:#FAF7F2;
+    --teal:#1F9E8E;
+    --teal-deep:#156F63;
+    --mist:#DFF0ED;
+    --navy:#0D2F3F;
+    --cream:#F6FBFA;
     --surface:#FFFFFF;
-    --ink:#2A241C;
-    --ink-soft:#5B5346;
-    --border-rgb:74,64,50;
-    --cream-rgb:250,247,242;
+    --ink:#132A30;
+    --ink-soft:#526B70;
+    --border-rgb:19,42,48;
+    --cream-rgb:246,251,250;
+    --teal-rgb:31,158,142;
   }
   html{scroll-behavior:smooth;}
   body{background:var(--cream);color:var(--ink);font-family:'Inter',sans-serif;overflow-x:hidden;}
@@ -90,32 +91,52 @@
 
   .card{
     background:var(--surface);
-    border:1px solid rgba(var(--border-rgb),0.14);
+    border:1px solid rgba(var(--border-rgb),0.12);
     border-radius:0.5rem;
     overflow:hidden;
   }
 
-  .btn-primary{
-    background:var(--terracotta);
-    color:#fff;
-    box-shadow:0 10px 24px rgba(182,85,47,0.32);
-    transition:background-color 220ms ease, transform 220ms ease, box-shadow 220ms ease;
+  /* Shine-sweep button: gradient fill + breathing glow + light streak sweep */
+  @keyframes btn-pulse-glow{
+    0%,100%{ box-shadow:0 10px 26px rgba(var(--teal-rgb),0.35), inset 0 1px rgba(255,255,255,0.3); }
+    50%{ box-shadow:0 12px 32px rgba(var(--teal-rgb),0.55), 0 0 0 4px rgba(var(--teal-rgb),0.14), inset 0 1px rgba(255,255,255,0.35); }
   }
-  .btn-primary:hover{background:var(--terracotta-deep); transform:translateY(-2px); box-shadow:0 14px 28px rgba(182,85,47,0.4);}
+  @keyframes btn-shine-sweep{
+    0%,40%{ transform:translate(-130%); }
+    75%,100%{ transform:translate(130%); }
+  }
+  .btn-primary{
+    position:relative;
+    overflow:hidden;
+    background:linear-gradient(135deg, var(--teal), var(--teal-deep));
+    color:#fff;
+    border:1px solid rgba(255,255,255,0.25);
+    animation:btn-pulse-glow 2.8s ease-in-out infinite;
+    transition:transform 260ms cubic-bezier(0.16,1,0.3,1), box-shadow 260ms cubic-bezier(0.16,1,0.3,1);
+  }
+  .btn-primary:hover{transform:translateY(-2px);}
+  .btn-primary > *{position:relative; z-index:1;}
+  .btn-primary::after{
+    content:'';
+    position:absolute; inset:0; z-index:0;
+    background:linear-gradient(110deg, transparent 30%, rgba(255,255,255,0.5) 50%, transparent 70%);
+    transform:translate(-130%);
+    animation:btn-shine-sweep 3s ease-in-out infinite;
+  }
 
   .step-circle{
     width:4.5rem; height:4.5rem;
     border-radius:9999px;
     display:flex; align-items:center; justify-content:center;
-    background:var(--terracotta);
+    background:linear-gradient(135deg, var(--teal), var(--teal-deep));
     color:#fff;
-    box-shadow:0 10px 24px rgba(182,85,47,0.3);
+    box-shadow:0 10px 24px rgba(var(--teal-rgb),0.3);
     position:relative; z-index:10;
   }
   .step-line{
     position:absolute; top:2.25rem; left:0; right:0;
     height:1px;
-    background:rgba(var(--border-rgb),0.25);
+    background:rgba(var(--border-rgb),0.18);
     z-index:0;
   }
 
@@ -131,19 +152,33 @@
 
   #whatsapp-float{box-shadow:0 6px 20px rgba(0,0,0,0.18);}
 
-  ::selection{background:var(--terracotta);color:#fff;}
+  ::selection{background:var(--teal);color:#fff;}
 
   .label-caps{font-size:0.7rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--ink-soft);}
 
-  input:focus, textarea:focus{outline:2px solid var(--terracotta); outline-offset:2px;}
-  a:focus-visible, button:focus-visible{outline:2px solid var(--terracotta); outline-offset:2px;}
+  input:focus, textarea:focus{outline:2px solid var(--teal); outline-offset:2px;}
+  a:focus-visible, button:focus-visible{outline:2px solid var(--teal); outline-offset:2px;}
 
+  /* Glass chip: translucent fill + soft shimmer, matching hero-style detail */
+  @keyframes chip-shimmer{
+    0%,55%{ transform:translate(-130%); }
+    100%{ transform:translate(130%); }
+  }
   .chip{
-    display:inline-block;
+    display:inline-flex; align-items:center;
+    position:relative; overflow:hidden;
     font-size:0.7rem; letter-spacing:0.08em; text-transform:uppercase;
-    padding:0.3rem 0.7rem; border-radius:9999px;
-    background:rgba(182,85,47,0.1); color:var(--terracotta-deep);
-    border:1px solid rgba(182,85,47,0.25);
+    padding:0.35rem 0.8rem; border-radius:9999px;
+    background:linear-gradient(135deg, rgba(var(--teal-rgb),0.16), rgba(var(--teal-rgb),0.04));
+    color:var(--teal-deep);
+    border:1px solid rgba(var(--teal-rgb),0.35);
+  }
+  .chip::after{
+    content:'';
+    position:absolute; inset:0;
+    background:linear-gradient(110deg, transparent 35%, rgba(255,255,255,0.6) 50%, transparent 65%);
+    transform:translate(-130%);
+    animation:chip-shimmer 3.4s ease-in-out infinite;
   }
 
   .gallery-item{aspect-ratio:1/1; overflow:hidden; border-radius:0.5rem;}
@@ -159,7 +194,7 @@
   #reservation-modal.open{display:flex;}
   #reservation-modal .modal-backdrop{
     position:absolute; inset:0;
-    background:rgba(42,36,28,0.55);
+    background:rgba(var(--border-rgb),0.55);
     backdrop-filter:blur(2px);
   }
   #reservation-modal .modal-panel{
@@ -184,14 +219,14 @@
     theme:{
       extend:{
         colors:{
-          'terracotta':'#B6552F',
-          'terracotta-deep':'#8F421F',
-          'sand':'#DCCBA6',
-          'olive':'#4C5638',
-          'cream':'#FAF7F2',
+          'teal':'#1F9E8E',
+          'teal-deep':'#156F63',
+          'mist':'#DFF0ED',
+          'navy':'#0D2F3F',
+          'cream':'#F6FBFA',
           'surface':'#FFFFFF',
-          'ink':'#2A241C',
-          'ink-soft':'#5B5346',
+          'ink':'#132A30',
+          'ink-soft':'#526B70',
         },
         fontFamily:{
           'serif':['Inter Tight','sans-serif'],
@@ -215,7 +250,7 @@
       <a href="#iletisim" class="link-underline">İletişim</a>
     </div>
     <button type="button" onclick="openReservationModal()" class="btn-primary cursor-pointer px-5 py-2.5 rounded-full text-sm font-medium">
-      Rezervasyon
+      <span>Rezervasyon</span>
     </button>
   </div>
 </nav>
@@ -224,7 +259,7 @@
 <section id="hero" class="relative min-h-[100dvh] flex items-end">
   <div class="absolute inset-0">
     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/B%C3%BCy%C3%BCkada%2C_Istanbul%2C_wooden_houses_1.jpg/1920px-B%C3%BCy%C3%BCkada%2C_Istanbul%2C_wooden_houses_1.jpg" alt="Büyükada'da tarihi ahşap konak, Adalar İstanbul" class="w-full h-full object-cover">
-    <div class="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/20 to-transparent"></div>
+    <div class="absolute inset-0 bg-gradient-to-t from-navy/75 via-navy/15 to-transparent"></div>
   </div>
 
   <div class="relative z-10 px-6 md:px-10 pb-24 w-full max-w-6xl mx-auto">
@@ -233,8 +268,7 @@
     <p class="hero-subtitle text-white/80 max-w-md mb-9 text-base md:text-lg">Ada Yalı Konak'ta deniz manzaralı odalar, sessiz bir bahçe ve vapur iskelesine 2 dakika mesafe seni bekliyor.</p>
 
     <button type="button" onclick="openReservationModal()" class="hero-cta btn-primary cursor-pointer inline-flex items-center gap-3 px-7 py-3.5 rounded-full text-base font-medium w-fit">
-      Rezervasyon Yap
-      <i data-lucide="arrow-right" class="w-4 h-4"></i>
+      <span class="inline-flex items-center gap-3">Rezervasyon Yap <i data-lucide="arrow-right" class="w-4 h-4"></i></span>
     </button>
   </div>
 </section>
@@ -257,17 +291,17 @@
 
     <div class="reveal-group grid md:grid-cols-3 gap-10">
       <div class="reveal-item">
-        <i data-lucide="map-pin" class="w-6 h-6 text-terracotta mb-4"></i>
+        <i data-lucide="map-pin" class="w-6 h-6 text-teal mb-4"></i>
         <h3 class="font-serif font-bold tracking-tight text-xl mb-2">Merkeze Yakın Konum</h3>
         <p class="text-ink-soft text-sm leading-relaxed">Faytonsuz, sessiz sokaklarda; vapur iskelesine 2 dakika, sahile 3 dakika, çarşıya 5 dakika yürüme mesafesinde.</p>
       </div>
       <div class="reveal-item">
-        <i data-lucide="waves" class="w-6 h-6 text-terracotta mb-4"></i>
+        <i data-lucide="waves" class="w-6 h-6 text-teal mb-4"></i>
         <h3 class="font-serif font-bold tracking-tight text-xl mb-2">Deniz Manzaralı Konfor</h3>
         <p class="text-ink-soft text-sm leading-relaxed">Taze çarşaflar, günlük temizlik, bahçede sabah kahvaltısı. Her odada deniz ya da bahçe manzarası.</p>
       </div>
       <div class="reveal-item">
-        <i data-lucide="calendar-check" class="w-6 h-6 text-terracotta mb-4"></i>
+        <i data-lucide="calendar-check" class="w-6 h-6 text-teal mb-4"></i>
         <h3 class="font-serif font-bold tracking-tight text-xl mb-2">Hafta Sonu Kaçamağına Hazır</h3>
         <p class="text-ink-soft text-sm leading-relaxed">Cuma–Pazar arası özel hızlı rezervasyon: WhatsApp'tan yaz, aynı gün onaylayalım.</p>
       </div>
@@ -276,7 +310,7 @@
 </section>
 
 <!-- Büyükada Rehberi -->
-<section id="rehber" class="py-24 px-6 md:px-10 bg-surface border-y border-ink/10">
+<section id="rehber" class="py-24 px-6 md:px-10 bg-mist border-y border-ink/10">
   <div class="max-w-6xl mx-auto">
     <p class="label-caps mb-3">Rehber</p>
     <h2 class="font-serif font-bold tracking-tight text-3xl md:text-4xl mb-16 max-w-2xl">Büyükada rehberi.</h2>
@@ -311,13 +345,13 @@
 </section>
 
 <!-- Philosophy -->
-<section class="philosophy-section relative py-32 px-6 md:px-10 bg-olive text-cream overflow-hidden">
+<section class="philosophy-section relative py-32 px-6 md:px-10 bg-navy text-cream overflow-hidden">
   <div class="absolute inset-0 opacity-25">
     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/B%C3%BCy%C3%BCkada%2C_Istanbul%2C_wooden_houses_2.jpg/1280px-B%C3%BCy%C3%BCkada%2C_Istanbul%2C_wooden_houses_2.jpg" alt="" class="w-full h-full object-cover">
   </div>
   <div class="relative max-w-2xl mx-auto text-center">
     <p class="reveal-item text-cream/70 mb-6">Çoğu konaklama sitesi sana sadece oda fotoğrafı ve fiyat listeler.</p>
-    <p class="reveal-item font-serif font-extrabold tracking-tight text-3xl md:text-5xl leading-tight">Biz Adalar'da gerçek bir <span class="text-terracotta">yuvaya</span> adım atmanı sağlarız.</p>
+    <p class="reveal-item font-serif font-extrabold tracking-tight text-3xl md:text-5xl leading-tight">Biz Adalar'da gerçek bir <span class="text-teal">yuvaya</span> adım atmanı sağlarız.</p>
   </div>
 </section>
 
@@ -352,7 +386,7 @@
 </section>
 
 <!-- Odalar -->
-<section id="odalar" class="py-24 px-6 md:px-10 bg-surface border-y border-ink/10">
+<section id="odalar" class="py-24 px-6 md:px-10 bg-mist border-y border-ink/10">
   <div class="max-w-6xl mx-auto">
     <p class="label-caps mb-3">Konaklama</p>
     <h2 class="font-serif font-bold tracking-tight text-3xl md:text-4xl mb-16 max-w-xl">Odalarımız.</h2>
@@ -361,27 +395,27 @@
       <div class="reveal-item card">
         <img src="https://images.unsplash.com/photo-1590490360182-c33d57733427?w=800&q=75" alt="Deniz manzaralı suit oda" class="w-full h-56 object-cover">
         <div class="p-6">
-          <span class="chip mb-3">Deniz Manzarası</span>
+          <span class="chip mb-3"><span class="relative z-10">Deniz Manzarası</span></span>
           <h3 class="font-serif font-bold tracking-tight text-lg mb-1">Deniz Manzaralı Suit</h3>
-          <p class="text-sm text-terracotta mb-3">₺8.000 / gece</p>
+          <p class="text-sm text-teal mb-3">₺8.000 / gece</p>
           <p class="text-ink-soft text-sm">Balkonlu, geniş, çift kişilik.</p>
         </div>
       </div>
       <div class="reveal-item card">
         <img src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=800&q=75" alt="Kara manzaralı bahçe odası" class="w-full h-56 object-cover">
         <div class="p-6">
-          <span class="chip mb-3">Kara Manzarası</span>
+          <span class="chip mb-3"><span class="relative z-10">Kara Manzarası</span></span>
           <h3 class="font-serif font-bold tracking-tight text-lg mb-1">Bahçe Odası</h3>
-          <p class="text-sm text-terracotta mb-3">₺7.000 / gece</p>
+          <p class="text-sm text-teal mb-3">₺7.000 / gece</p>
           <p class="text-ink-soft text-sm">Sessiz, gölgeli bahçeye açılan.</p>
         </div>
       </div>
       <div class="reveal-item card">
         <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&q=75" alt="Aile odası" class="w-full h-56 object-cover">
         <div class="p-6">
-          <span class="chip mb-3">Kara Manzarası</span>
+          <span class="chip mb-3"><span class="relative z-10">Kara Manzarası</span></span>
           <h3 class="font-serif font-bold tracking-tight text-lg mb-1">Aile Odası (2+1)</h3>
-          <p class="text-sm text-terracotta mb-3">₺7.500 / gece</p>
+          <p class="text-sm text-teal mb-3">₺7.500 / gece</p>
           <p class="text-ink-soft text-sm">Ayrı çocuk odalı, geniş aile konforu.</p>
         </div>
       </div>
@@ -407,10 +441,10 @@
     <h2 class="font-serif font-bold tracking-tight text-3xl md:text-4xl mb-16">Misafir yorumları.</h2>
     <div class="reveal-group grid md:grid-cols-3 gap-6">
       <div class="reveal-item card p-7">
-        <div class="flex items-center gap-1 mb-4 text-terracotta text-sm">★★★★★</div>
+        <div class="flex items-center gap-1 mb-4 text-teal text-sm">★★★★★</div>
         <p class="text-sm text-ink-soft mb-5 italic leading-relaxed">"İş yerinden kaçıp gelmiştim, kapıdan girer girmez rahatladım. Deniz manzaralı oda tam beklediğim gibiydi."</p>
         <div class="flex items-center gap-3">
-          <div class="w-9 h-9 rounded-full bg-sand flex items-center justify-center font-serif font-bold text-sm">EY</div>
+          <div class="w-9 h-9 rounded-full bg-mist flex items-center justify-center font-serif font-bold text-sm">EY</div>
           <div>
             <p class="text-sm font-medium">Elif Y.</p>
             <p class="label-caps">Hafta Sonu Kaçamağı</p>
@@ -418,10 +452,10 @@
         </div>
       </div>
       <div class="reveal-item card p-7">
-        <div class="flex items-center gap-1 mb-4 text-terracotta text-sm">★★★★★</div>
+        <div class="flex items-center gap-1 mb-4 text-teal text-sm">★★★★★</div>
         <p class="text-sm text-ink-soft mb-5 italic leading-relaxed">"Vapurdan indik, gerçekten 2 dakikada konaktaydık. Kahvaltı bahçede, sessizlik tam istediğimiz gibiydi."</p>
         <div class="flex items-center gap-3">
-          <div class="w-9 h-9 rounded-full bg-sand flex items-center justify-center font-serif font-bold text-sm">MK</div>
+          <div class="w-9 h-9 rounded-full bg-mist flex items-center justify-center font-serif font-bold text-sm">MK</div>
           <div>
             <p class="text-sm font-medium">Murat K.</p>
             <p class="label-caps">Aile Konaklaması</p>
@@ -429,10 +463,10 @@
         </div>
       </div>
       <div class="reveal-item card p-7">
-        <div class="flex items-center gap-1 mb-4 text-terracotta text-sm">★★★★★</div>
+        <div class="flex items-center gap-1 mb-4 text-teal text-sm">★★★★★</div>
         <p class="text-sm text-ink-soft mb-5 italic leading-relaxed">"WhatsApp'tan yazdım, 10 dakikada rezervasyon tamamdı. Otel aramaktan çok daha kolaydı."</p>
         <div class="flex items-center gap-3">
-          <div class="w-9 h-9 rounded-full bg-sand flex items-center justify-center font-serif font-bold text-sm">SD</div>
+          <div class="w-9 h-9 rounded-full bg-mist flex items-center justify-center font-serif font-bold text-sm">SD</div>
           <div>
             <p class="text-sm font-medium">Selin D.</p>
             <p class="label-caps">Son Dakika Rezervasyon</p>
@@ -455,7 +489,7 @@
         <input id="lead-phone" type="tel" placeholder="Telefon Numaranız" class="w-full px-4 py-3 rounded-md bg-cream border border-ink/15 text-sm">
         <input id="lead-date" type="text" placeholder="Tarih (ör. 15-17 Ağustos)" class="w-full px-4 py-3 rounded-md bg-cream border border-ink/15 text-sm">
         <button onclick="submitToWhatsApp()" class="btn-primary cursor-pointer w-full py-3.5 rounded-md text-sm font-medium">
-          WhatsApp'tan Gönder →
+          <span>WhatsApp'tan Gönder →</span>
         </button>
       </div>
       <p class="label-caps mt-4 text-center">Bilgileriniz güvende. Spam yapmıyoruz.</p>
@@ -484,7 +518,7 @@
         <option value="5+ kişi">5+ kişi</option>
       </select>
       <button onclick="submitReservationModal()" class="btn-primary cursor-pointer w-full py-3.5 rounded-md text-sm font-medium">
-        WhatsApp'tan Gönder →
+        <span>WhatsApp'tan Gönder →</span>
       </button>
     </div>
     <p class="label-caps mt-4 text-center">Bilgileriniz güvende. Spam yapmıyoruz.</p>
@@ -504,7 +538,7 @@
 </a>
 
 <!-- Footer -->
-<footer class="bg-olive text-cream pt-16 pb-8 px-6 md:px-10">
+<footer class="bg-navy text-cream pt-16 pb-8 px-6 md:px-10">
   <div class="max-w-6xl mx-auto grid md:grid-cols-4 gap-12 mb-14">
     <div>
       <h3 class="font-serif font-extrabold tracking-tight text-xl mb-3">Ada Yalı Konak</h3>
@@ -530,8 +564,8 @@
     <div>
       <h4 class="label-caps text-cream/50 mb-4">Bizi Takip Et</h4>
       <div class="flex gap-3">
-        <a href="#" class="w-9 h-9 rounded-full bg-cream/10 flex items-center justify-center hover:bg-terracotta transition-colors cursor-pointer"><i data-lucide="camera" class="w-4 h-4"></i></a>
-        <a href="https://wa.me/905551234567" target="_blank" rel="noopener noreferrer" class="w-9 h-9 rounded-full bg-cream/10 flex items-center justify-center hover:bg-terracotta transition-colors cursor-pointer"><i data-lucide="message-circle" class="w-4 h-4"></i></a>
+        <a href="#" class="w-9 h-9 rounded-full bg-cream/10 flex items-center justify-center hover:bg-teal transition-colors cursor-pointer"><i data-lucide="camera" class="w-4 h-4"></i></a>
+        <a href="https://wa.me/905551234567" target="_blank" rel="noopener noreferrer" class="w-9 h-9 rounded-full bg-cream/10 flex items-center justify-center hover:bg-teal transition-colors cursor-pointer"><i data-lucide="message-circle" class="w-4 h-4"></i></a>
       </div>
     </div>
   </div>
