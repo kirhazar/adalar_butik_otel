@@ -207,20 +207,19 @@
 
   input[type="date"]{color-scheme:light; accent-color:var(--teal);}
 
-  /* Date field: free-typed text box + calendar-icon button that opens a hidden
-     native date input. Avoids the inconsistent/oversized native date box on mobile. */
+  /* Date field: free-typed text box + calendar icon. The native date input sits
+     invisibly on top of just the icon area so a real tap there always opens the
+     OS/browser date picker directly (reliable on mobile, unlike JS showPicker()). */
   .date-field{position:relative;}
   .date-field-text{padding-right:2.75rem;}
   .date-field-icon{
     position:absolute; right:0.4rem; top:50%; transform:translateY(-50%);
     width:2rem; height:2rem; display:flex; align-items:center; justify-content:center;
-    border-radius:9999px; background:transparent; border:none;
-    color:var(--teal-deep); cursor:pointer; transition:background 180ms ease;
+    border-radius:9999px; color:var(--teal-deep); pointer-events:none; z-index:1;
   }
-  .date-field-icon:hover{background:rgba(var(--teal-rgb),0.12);}
   .date-field-native{
-    position:absolute; inset:0; width:1px; height:1px;
-    opacity:0; pointer-events:none; border:0; padding:0; margin:0;
+    position:absolute; right:0; top:0; width:2.75rem; height:100%;
+    opacity:0; cursor:pointer; border:0; padding:0; margin:0; z-index:2;
   }
 
   /* Glass chip: translucent fill + soft shimmer, matching hero-style detail */
@@ -782,16 +781,16 @@
             <label for="lead-checkin-text" class="label-caps block mb-1.5">Giriş Tarihi</label>
             <div class="date-field">
               <input id="lead-checkin-text" type="text" inputmode="numeric" autocomplete="off" placeholder="gg.aa.yyyy" class="date-field-text w-full px-4 py-3 rounded-md bg-cream border border-ink/15 text-sm">
-              <button type="button" class="date-field-icon" data-target="lead-checkin" aria-label="Tarih seç"><i data-lucide="calendar" class="w-4 h-4"></i></button>
-              <input id="lead-checkin" type="date" class="date-field-native" tabindex="-1">
+              <span class="date-field-icon" aria-hidden="true"><i data-lucide="calendar" class="w-4 h-4"></i></span>
+              <input id="lead-checkin" type="date" class="date-field-native" aria-label="Giriş tarihi seç">
             </div>
           </div>
           <div class="min-w-0">
             <label for="lead-checkout-text" class="label-caps block mb-1.5">Çıkış Tarihi</label>
             <div class="date-field">
               <input id="lead-checkout-text" type="text" inputmode="numeric" autocomplete="off" placeholder="gg.aa.yyyy" class="date-field-text w-full px-4 py-3 rounded-md bg-cream border border-ink/15 text-sm">
-              <button type="button" class="date-field-icon" data-target="lead-checkout" aria-label="Tarih seç"><i data-lucide="calendar" class="w-4 h-4"></i></button>
-              <input id="lead-checkout" type="date" class="date-field-native" tabindex="-1">
+              <span class="date-field-icon" aria-hidden="true"><i data-lucide="calendar" class="w-4 h-4"></i></span>
+              <input id="lead-checkout" type="date" class="date-field-native" aria-label="Çıkış tarihi seç">
             </div>
           </div>
         </div>
@@ -826,16 +825,16 @@
           <label for="modal-checkin-text" class="label-caps block mb-1.5">Giriş Tarihi</label>
           <div class="date-field">
             <input id="modal-checkin-text" type="text" inputmode="numeric" autocomplete="off" placeholder="gg.aa.yyyy" class="date-field-text w-full px-4 py-3 rounded-md bg-cream border border-ink/15 text-sm">
-            <button type="button" class="date-field-icon" data-target="modal-checkin" aria-label="Tarih seç"><i data-lucide="calendar" class="w-4 h-4"></i></button>
-            <input id="modal-checkin" type="date" class="date-field-native" tabindex="-1">
+            <span class="date-field-icon" aria-hidden="true"><i data-lucide="calendar" class="w-4 h-4"></i></span>
+            <input id="modal-checkin" type="date" class="date-field-native" aria-label="Giriş tarihi seç">
           </div>
         </div>
         <div class="min-w-0">
           <label for="modal-checkout-text" class="label-caps block mb-1.5">Çıkış Tarihi</label>
           <div class="date-field">
             <input id="modal-checkout-text" type="text" inputmode="numeric" autocomplete="off" placeholder="gg.aa.yyyy" class="date-field-text w-full px-4 py-3 rounded-md bg-cream border border-ink/15 text-sm">
-            <button type="button" class="date-field-icon" data-target="modal-checkout" aria-label="Tarih seç"><i data-lucide="calendar" class="w-4 h-4"></i></button>
-            <input id="modal-checkout" type="date" class="date-field-native" tabindex="-1">
+            <span class="date-field-icon" aria-hidden="true"><i data-lucide="calendar" class="w-4 h-4"></i></span>
+            <input id="modal-checkout" type="date" class="date-field-native" aria-label="Çıkış tarihi seç">
           </div>
         </div>
       </div>
@@ -1000,32 +999,8 @@
       checkoutEl.min = tomorrowStr;
       if (!checkoutEl.value) checkoutEl.value = tomorrowStr;
 
-      checkinEl.addEventListener('change', () => {
-        if (!checkinEl.value) return;
-        const nextDay = new Date(checkinEl.value + 'T00:00:00');
-        nextDay.setDate(nextDay.getDate() + 1);
-        const nextDayStr = formatISODate(nextDay);
-        checkoutEl.min = nextDayStr;
-        if (!checkoutEl.value || checkoutEl.value <= checkinEl.value) {
-          checkoutEl.value = nextDayStr;
-          checkoutEl.dispatchEvent(new Event('change'));
-        }
-      });
-
       setupDateField(`${inId}-text`, inId);
       setupDateField(`${outId}-text`, outId);
-    });
-
-    document.querySelectorAll('.date-field-icon').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        const target = document.getElementById(btn.dataset.target);
-        if (!target) return;
-        if (typeof target.showPicker === 'function') {
-          try { target.showPicker(); } catch (e) { target.focus(); }
-        } else {
-          target.focus();
-        }
-      });
     });
   }
 
