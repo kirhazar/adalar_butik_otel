@@ -205,10 +205,22 @@
   input:focus, textarea:focus{outline:2px solid var(--teal); outline-offset:2px;}
   a:focus-visible, button:focus-visible{outline:2px solid var(--teal); outline-offset:2px;}
 
-  input[type="date"]{color-scheme:light; accent-color:var(--teal); cursor:pointer; min-width:0; box-sizing:border-box;}
-  input[type="date"]::-webkit-calendar-picker-indicator{
-    filter:invert(46%) sepia(53%) saturate(485%) hue-rotate(126deg) brightness(94%) contrast(90%);
-    opacity:0.85; cursor:pointer;
+  input[type="date"]{color-scheme:light; accent-color:var(--teal);}
+
+  /* Date field: free-typed text box + calendar-icon button that opens a hidden
+     native date input. Avoids the inconsistent/oversized native date box on mobile. */
+  .date-field{position:relative;}
+  .date-field-text{padding-right:2.75rem;}
+  .date-field-icon{
+    position:absolute; right:0.4rem; top:50%; transform:translateY(-50%);
+    width:2rem; height:2rem; display:flex; align-items:center; justify-content:center;
+    border-radius:9999px; background:transparent; border:none;
+    color:var(--teal-deep); cursor:pointer; transition:background 180ms ease;
+  }
+  .date-field-icon:hover{background:rgba(var(--teal-rgb),0.12);}
+  .date-field-native{
+    position:absolute; inset:0; width:1px; height:1px;
+    opacity:0; pointer-events:none; border:0; padding:0; margin:0;
   }
 
   /* Glass chip: translucent fill + soft shimmer, matching hero-style detail */
@@ -767,12 +779,20 @@
         <input id="lead-phone" type="tel" placeholder="Telefon Numaranız" class="w-full px-4 py-3 rounded-md bg-cream border border-ink/15 text-sm">
         <div class="grid grid-cols-1 gap-3">
           <div class="min-w-0">
-            <label for="lead-checkin" class="label-caps block mb-1.5">Giriş Tarihi</label>
-            <input id="lead-checkin" type="date" class="w-full px-4 py-3 rounded-md bg-cream border border-ink/15 text-sm">
+            <label for="lead-checkin-text" class="label-caps block mb-1.5">Giriş Tarihi</label>
+            <div class="date-field">
+              <input id="lead-checkin-text" type="text" inputmode="numeric" autocomplete="off" placeholder="gg.aa.yyyy" class="date-field-text w-full px-4 py-3 rounded-md bg-cream border border-ink/15 text-sm">
+              <button type="button" class="date-field-icon" data-target="lead-checkin" aria-label="Tarih seç"><i data-lucide="calendar" class="w-4 h-4"></i></button>
+              <input id="lead-checkin" type="date" class="date-field-native" tabindex="-1">
+            </div>
           </div>
           <div class="min-w-0">
-            <label for="lead-checkout" class="label-caps block mb-1.5">Çıkış Tarihi</label>
-            <input id="lead-checkout" type="date" class="w-full px-4 py-3 rounded-md bg-cream border border-ink/15 text-sm">
+            <label for="lead-checkout-text" class="label-caps block mb-1.5">Çıkış Tarihi</label>
+            <div class="date-field">
+              <input id="lead-checkout-text" type="text" inputmode="numeric" autocomplete="off" placeholder="gg.aa.yyyy" class="date-field-text w-full px-4 py-3 rounded-md bg-cream border border-ink/15 text-sm">
+              <button type="button" class="date-field-icon" data-target="lead-checkout" aria-label="Tarih seç"><i data-lucide="calendar" class="w-4 h-4"></i></button>
+              <input id="lead-checkout" type="date" class="date-field-native" tabindex="-1">
+            </div>
           </div>
         </div>
         <div class="consent-row">
@@ -803,12 +823,20 @@
       <input id="modal-phone" type="tel" placeholder="Telefon Numaranız" class="w-full px-4 py-3 rounded-md bg-cream border border-ink/15 text-sm">
       <div class="grid grid-cols-1 gap-3">
         <div class="min-w-0">
-          <label for="modal-checkin" class="label-caps block mb-1.5">Giriş Tarihi</label>
-          <input id="modal-checkin" type="date" class="w-full px-4 py-3 rounded-md bg-cream border border-ink/15 text-sm">
+          <label for="modal-checkin-text" class="label-caps block mb-1.5">Giriş Tarihi</label>
+          <div class="date-field">
+            <input id="modal-checkin-text" type="text" inputmode="numeric" autocomplete="off" placeholder="gg.aa.yyyy" class="date-field-text w-full px-4 py-3 rounded-md bg-cream border border-ink/15 text-sm">
+            <button type="button" class="date-field-icon" data-target="modal-checkin" aria-label="Tarih seç"><i data-lucide="calendar" class="w-4 h-4"></i></button>
+            <input id="modal-checkin" type="date" class="date-field-native" tabindex="-1">
+          </div>
         </div>
         <div class="min-w-0">
-          <label for="modal-checkout" class="label-caps block mb-1.5">Çıkış Tarihi</label>
-          <input id="modal-checkout" type="date" class="w-full px-4 py-3 rounded-md bg-cream border border-ink/15 text-sm">
+          <label for="modal-checkout-text" class="label-caps block mb-1.5">Çıkış Tarihi</label>
+          <div class="date-field">
+            <input id="modal-checkout-text" type="text" inputmode="numeric" autocomplete="off" placeholder="gg.aa.yyyy" class="date-field-text w-full px-4 py-3 rounded-md bg-cream border border-ink/15 text-sm">
+            <button type="button" class="date-field-icon" data-target="modal-checkout" aria-label="Tarih seç"><i data-lucide="calendar" class="w-4 h-4"></i></button>
+            <input id="modal-checkout" type="date" class="date-field-native" tabindex="-1">
+          </div>
         </div>
       </div>
       <select id="modal-guests" class="w-full px-4 py-3 rounded-md bg-cream border border-ink/15 text-sm text-ink-soft">
@@ -914,6 +942,47 @@
     return `${y}-${m}-${d}`;
   }
 
+  function isoToDisplayDate(iso) {
+    const match = (iso || '').match(/^(\d{4})-(\d{2})-(\d{2})$/);
+    return match ? `${match[3]}.${match[2]}.${match[1]}` : '';
+  }
+
+  function displayToISODate(display) {
+    const match = (display || '').match(/^(\d{2})\.(\d{2})\.(\d{4})$/);
+    return match ? `${match[3]}-${match[2]}-${match[1]}` : '';
+  }
+
+  // Pairs a hidden native date input (source of truth, drives the picker) with a
+  // visible free-typed text field, so mobile browsers never render the inconsistent
+  // native date box directly — only the calendar-icon button opens it.
+  function setupDateField(textId, nativeId) {
+    const textEl = document.getElementById(textId);
+    const nativeEl = document.getElementById(nativeId);
+    if (!textEl || !nativeEl) return;
+
+    textEl.value = isoToDisplayDate(nativeEl.value);
+
+    nativeEl.addEventListener('change', () => {
+      textEl.value = isoToDisplayDate(nativeEl.value);
+    });
+
+    textEl.addEventListener('input', () => {
+      const digits = textEl.value.replace(/\D/g, '').slice(0, 8);
+      let formatted = digits;
+      if (digits.length > 4) formatted = `${digits.slice(0, 2)}.${digits.slice(2, 4)}.${digits.slice(4)}`;
+      else if (digits.length > 2) formatted = `${digits.slice(0, 2)}.${digits.slice(2)}`;
+      textEl.value = formatted;
+
+      if (digits.length === 8) {
+        const iso = displayToISODate(formatted);
+        if (iso) {
+          nativeEl.value = iso;
+          nativeEl.dispatchEvent(new Event('change'));
+        }
+      }
+    });
+  }
+
   function initDateInputs() {
     const today = new Date();
     const tomorrow = new Date(today);
@@ -939,6 +1008,22 @@
         checkoutEl.min = nextDayStr;
         if (!checkoutEl.value || checkoutEl.value <= checkinEl.value) {
           checkoutEl.value = nextDayStr;
+          checkoutEl.dispatchEvent(new Event('change'));
+        }
+      });
+
+      setupDateField(`${inId}-text`, inId);
+      setupDateField(`${outId}-text`, outId);
+    });
+
+    document.querySelectorAll('.date-field-icon').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const target = document.getElementById(btn.dataset.target);
+        if (!target) return;
+        if (typeof target.showPicker === 'function') {
+          try { target.showPicker(); } catch (e) { target.focus(); }
+        } else {
+          target.focus();
         }
       });
     });
