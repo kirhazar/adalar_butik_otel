@@ -162,12 +162,19 @@
 
   .label-caps{font-size:0.7rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--ink-soft);}
 
-  /* Kicker: section eyebrow, wave mark + label + fading rule */
-  .kicker{display:inline-flex; align-items:center; gap:0.6rem; color:var(--teal-deep);}
-  .kicker-wave{width:1.4rem; height:0.75rem; flex-shrink:0;}
+  /* Kicker: section eyebrow, icon badge + label + fading rule */
+  .kicker{display:inline-flex; align-items:center; gap:0.65rem; color:var(--teal-deep);}
+  .kicker-icon{
+    width:2rem; height:2rem; border-radius:9999px; flex-shrink:0;
+    display:flex; align-items:center; justify-content:center;
+    background:linear-gradient(135deg, rgba(var(--teal-rgb),0.18), rgba(var(--teal-rgb),0.05));
+    border:1px solid rgba(var(--teal-rgb),0.35);
+    box-shadow:0 4px 10px rgba(var(--teal-rgb),0.12);
+  }
+  .kicker-icon i{width:1.05rem; height:1.05rem;}
   .kicker-text{
     font-family:'Inter Tight',sans-serif;
-    font-size:0.74rem; font-weight:700; letter-spacing:0.17em;
+    font-size:0.76rem; font-weight:700; letter-spacing:0.15em;
     text-transform:uppercase; white-space:nowrap;
   }
   .kicker-rule{height:1px; width:2.75rem; flex-shrink:0;
@@ -352,7 +359,7 @@
 <section id="avantajlar" class="py-24 px-6 md:px-10">
   <div class="max-w-6xl mx-auto">
     <div class="kicker mb-4">
-      <svg class="kicker-wave" viewBox="0 0 28 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 7c2.5-5 5-5 7 0s4.5 5 7 0 4.5-5 7 0 4.5 5 7 0" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      <span class="kicker-icon"><i data-lucide="sparkles"></i></span>
       <span class="kicker-text">Neden Ada Yalı Konak</span>
       <span class="kicker-rule"></span>
     </div>
@@ -382,7 +389,7 @@
 <section id="rehber" class="py-24 px-6 md:px-10 bg-mist border-y border-ink/10">
   <div class="max-w-6xl mx-auto">
     <div class="kicker mb-4">
-      <svg class="kicker-wave" viewBox="0 0 28 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 7c2.5-5 5-5 7 0s4.5 5 7 0 4.5-5 7 0 4.5 5 7 0" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      <span class="kicker-icon"><i data-lucide="compass"></i></span>
       <span class="kicker-text">Rehber</span>
       <span class="kicker-rule"></span>
     </div>
@@ -416,7 +423,7 @@
     </div>
 
     <div class="kicker mb-4 mt-12">
-      <svg class="kicker-wave" viewBox="0 0 28 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 7c2.5-5 5-5 7 0s4.5 5 7 0 4.5-5 7 0 4.5 5 7 0" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      <span class="kicker-icon"><i data-lucide="footprints"></i></span>
       <span class="kicker-text">Ne Yapabilirsin</span>
       <span class="kicker-rule"></span>
     </div>
@@ -474,7 +481,7 @@
 <section id="rezervasyon-adimlari" class="py-24 px-6 md:px-10">
   <div class="max-w-5xl mx-auto text-center">
     <div class="kicker mb-4">
-      <svg class="kicker-wave" viewBox="0 0 28 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 7c2.5-5 5-5 7 0s4.5 5 7 0 4.5-5 7 0 4.5 5 7 0" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      <span class="kicker-icon"><i data-lucide="route"></i></span>
       <span class="kicker-text">Nasıl Çalışır</span>
       <span class="kicker-rule"></span>
     </div>
@@ -517,7 +524,7 @@
 <section id="odalar" class="py-24 px-6 md:px-10 bg-mist border-y border-ink/10">
   <div class="max-w-6xl mx-auto">
     <div class="kicker mb-4">
-      <svg class="kicker-wave" viewBox="0 0 28 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 7c2.5-5 5-5 7 0s4.5 5 7 0 4.5-5 7 0 4.5 5 7 0" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      <span class="kicker-icon"><i data-lucide="bed-double"></i></span>
       <span class="kicker-text">Konaklama</span>
       <span class="kicker-rule"></span>
     </div>
@@ -570,7 +577,7 @@
 <section id="yorumlar" class="py-24 px-6 md:px-10">
   <div class="max-w-6xl mx-auto">
     <div class="kicker mb-4">
-      <svg class="kicker-wave" viewBox="0 0 28 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 7c2.5-5 5-5 7 0s4.5 5 7 0 4.5-5 7 0 4.5 5 7 0" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      <span class="kicker-icon"><i data-lucide="quote"></i></span>
       <span class="kicker-text">Misafirlerimiz</span>
       <span class="kicker-rule"></span>
     </div>
@@ -621,7 +628,7 @@
         <img src="https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?w=1000&q=80" alt="Büyükada'da deniz manzarası" class="w-full h-72 md:h-96 object-cover">
       </div>
       <div class="kicker mb-4">
-        <svg class="kicker-wave" viewBox="0 0 28 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 7c2.5-5 5-5 7 0s4.5 5 7 0 4.5-5 7 0 4.5 5 7 0" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        <span class="kicker-icon"><i data-lucide="send"></i></span>
         <span class="kicker-text">Rezervasyon</span>
         <span class="kicker-rule"></span>
       </div>
