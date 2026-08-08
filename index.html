@@ -41,7 +41,7 @@
   "description": "Büyükada'da deniz manzaralı, vapur iskelesine 2 dakika mesafede butik konak. Adalar'da hafta sonu kaçamağı için ideal konaklama.",
   "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/B%C3%BCy%C3%BCkada%2C_Istanbul%2C_wooden_houses_1.jpg/1280px-B%C3%BCy%C3%BCkada%2C_Istanbul%2C_wooden_houses_1.jpg",
   "url": "https://www.adayalikonak.com/",
-  "telephone": "+905551234567",
+  "telephone": "+905367912996",
   "priceRange": "₺7000-₺8000",
   "address": {
     "@type": "PostalAddress",
@@ -248,38 +248,15 @@
   #cookie-banner.open{display:flex;}
   #cookie-banner a{color:var(--teal); text-decoration:underline;}
 
-  /* Site guide tour */
-  #guide-launcher{
-    position:fixed; bottom:6rem; right:1.5rem; z-index:50;
-    display:flex; align-items:center; gap:0.5rem;
-    background:var(--surface); color:var(--ink);
-    border:1px solid rgba(var(--border-rgb),0.15);
-    padding:0.7rem 1rem; border-radius:9999px; cursor:pointer;
-    box-shadow:0 6px 20px rgba(0,0,0,0.14);
-    font-size:0.8rem; font-weight:500;
+  /* Activity guide cards */
+  .activity-card{position:relative; overflow:hidden; border-radius:0.6rem; aspect-ratio:4/5;}
+  .activity-card img{width:100%; height:100%; object-fit:cover; transition:transform 500ms ease;}
+  .activity-card:hover img{transform:scale(1.06);}
+  .activity-card .activity-overlay{
+    position:absolute; inset:0;
+    background:linear-gradient(to top, rgba(6,16,20,0.88) 0%, rgba(6,16,20,0.25) 55%, transparent 100%);
   }
-  #guide-prompt{
-    position:fixed; z-index:95; bottom:10.5rem; right:1.5rem;
-    max-width:15.5rem;
-    background:var(--surface); border-radius:0.75rem;
-    padding:1rem 1.1rem; box-shadow:0 20px 45px rgba(0,0,0,0.2);
-    display:none;
-  }
-  #guide-prompt.open{display:block;}
-  .tour-highlight{
-    position:relative; z-index:96;
-    outline:3px solid var(--teal); outline-offset:4px;
-    border-radius:0.5rem;
-    box-shadow:0 0 0 9999px rgba(6,16,20,0.55);
-  }
-  #guide-tooltip{
-    position:fixed; z-index:97; left:50%; bottom:1.5rem; transform:translateX(-50%);
-    width:min(24rem, calc(100vw - 2rem));
-    background:var(--surface); border-radius:0.75rem;
-    padding:1.25rem 1.4rem; box-shadow:0 20px 50px rgba(0,0,0,0.3);
-    display:none;
-  }
-  #guide-tooltip.open{display:block;}
+  .activity-card .activity-copy{position:absolute; left:0; right:0; bottom:0; padding:1.1rem;}
 </style>
 
 <script>
@@ -383,7 +360,7 @@
     <p class="label-caps mb-3">Rehber</p>
     <h2 class="font-serif font-bold tracking-tight text-3xl md:text-4xl mb-16 max-w-2xl">Büyükada rehberi.</h2>
 
-    <div class="reveal-group grid md:grid-cols-2 gap-6">
+    <div class="reveal-group grid md:grid-cols-2 gap-6 mb-6">
       <div class="reveal-item card">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Dilek_g%C3%BCn%C3%BC%2C_Azap_Yoku%C5%9Fu%2C_Aya_Yorgi_Kilisesi%2C_B%C3%BCy%C3%BCkada_2015-11.jpg/1280px-Dilek_g%C3%BCn%C3%BC%2C_Azap_Yoku%C5%9Fu%2C_Aya_Yorgi_Kilisesi%2C_B%C3%BCy%C3%BCkada_2015-11.jpg" alt="Aya Yorgi Kilisesi, Büyükada'da gezilecek yerler" class="w-full h-52 object-cover">
         <div class="p-7">
@@ -406,6 +383,44 @@
             <li>Nizam Plajı</li>
             <li>Değirmenburnu Plajı</li>
           </ul>
+        </div>
+      </div>
+    </div>
+
+    <p class="label-caps mb-3 mt-12">Ne Yapabilirsin</p>
+    <h3 class="font-serif font-bold tracking-tight text-2xl md:text-3xl mb-8 max-w-xl">Adaya çıkınca vaktini nasıl değerlendirirsin.</h3>
+
+    <div class="reveal-group grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div class="reveal-item activity-card">
+        <img src="https://images.unsplash.com/photo-1497034825429-c343d7c6a68f?w=700&q=75" alt="Büyükada çarşısında dondurma keyfi">
+        <div class="activity-overlay"></div>
+        <div class="activity-copy">
+          <h4 class="font-serif font-bold text-white text-base mb-1">Dondurma Keyfi</h4>
+          <p class="text-white/75 text-xs leading-relaxed">İskele çarşısındaki dondurmacılarda mola ver.</p>
+        </div>
+      </div>
+      <div class="reveal-item activity-card">
+        <img src="https://images.unsplash.com/photo-1485965120184-e220f721d03e?w=700&q=75" alt="Büyükada'da bisiklet kiralama ve yürüyüş">
+        <div class="activity-overlay"></div>
+        <div class="activity-copy">
+          <h4 class="font-serif font-bold text-white text-base mb-1">Bisiklet &amp; Yürüyüş</h4>
+          <p class="text-white/75 text-xs leading-relaxed">Faytonsuz adada bisiklet kirala, çam ormanında yürü.</p>
+        </div>
+      </div>
+      <div class="reveal-item activity-card">
+        <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=700&q=75" alt="Büyükada çarşısında hediyelik eşya alışverişi">
+        <div class="activity-overlay"></div>
+        <div class="activity-copy">
+          <h4 class="font-serif font-bold text-white text-base mb-1">Alışveriş</h4>
+          <p class="text-white/75 text-xs leading-relaxed">Çarşıda hediyelik eşya ve yöresel ürünlere göz at.</p>
+        </div>
+      </div>
+      <div class="reveal-item activity-card">
+        <img src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?w=700&q=75" alt="Büyükada'da tekne ve deniz motoru turu">
+        <div class="activity-overlay"></div>
+        <div class="activity-copy">
+          <h4 class="font-serif font-bold text-white text-base mb-1">Tekne Turu</h4>
+          <p class="text-white/75 text-xs leading-relaxed">Deniz motoru kirala, saklı koyları keşfet.</p>
         </div>
       </div>
     </div>
@@ -616,36 +631,8 @@
   <button onclick="acceptCookies()" class="btn-primary cursor-pointer px-5 py-2 rounded-full text-xs font-medium whitespace-nowrap">Kabul Et</button>
 </div>
 
-<!-- Site guide -->
-<button type="button" id="guide-launcher" onclick="startGuideTour()">
-  <i data-lucide="compass" class="w-4 h-4"></i>
-  <span class="hidden sm:inline">Site Rehberi</span>
-</button>
-
-<div id="guide-prompt">
-  <p class="text-sm font-medium mb-1">İlk kez mi geldin?</p>
-  <p class="text-xs text-ink-soft mb-3">Seni 30 saniyede sitede gezdirelim, güvenilir olduğumuzu ve neler yapabileceğini göster.</p>
-  <div class="flex gap-2">
-    <button onclick="startGuideTour()" class="btn-primary cursor-pointer flex-1 py-2 rounded-full text-xs font-medium">Rehberi Başlat</button>
-    <button onclick="dismissGuidePrompt()" class="cursor-pointer px-3 py-2 rounded-full text-xs font-medium border border-ink/15">Kapat</button>
-  </div>
-</div>
-
-<div id="guide-tooltip">
-  <p class="label-caps mb-2" id="guide-step-label">Adım 1 / 6</p>
-  <h4 class="font-serif font-bold tracking-tight text-lg mb-2" id="guide-title"></h4>
-  <p class="text-sm text-ink-soft mb-5" id="guide-text"></p>
-  <div class="flex items-center justify-between gap-3">
-    <button onclick="endGuideTour()" class="cursor-pointer text-xs text-ink-soft link-underline">Turu Kapat</button>
-    <div class="flex gap-2">
-      <button id="guide-prev" onclick="guideStep(-1)" class="cursor-pointer px-4 py-2 rounded-full text-xs font-medium border border-ink/15">Geri</button>
-      <button id="guide-next" onclick="guideStep(1)" class="btn-primary cursor-pointer px-4 py-2 rounded-full text-xs font-medium">İleri</button>
-    </div>
-  </div>
-</div>
-
 <!-- Floating WhatsApp -->
-<a href="https://wa.me/905551234567?text=Merhaba%2C%20Ada%20Yal%C4%B1%20Konak%27tan%20bilgi%20almak%20istiyorum."
+<a href="https://wa.me/905367912996?text=Merhaba%2C%20Ada%20Yal%C4%B1%20Konak%27tan%20bilgi%20almak%20istiyorum."
    target="_blank" rel="noopener noreferrer"
    id="whatsapp-float"
    class="fixed bottom-6 right-6 z-50 flex items-center gap-3 bg-[#25D366] text-white pl-4 pr-5 py-3 rounded-full cursor-pointer hover:scale-105 transition-transform duration-200">
@@ -676,7 +663,7 @@
       <div class="flex flex-col gap-2 text-sm text-cream/80">
         <span>Çankaya Caddesi No:14, Büyükada</span>
         <span>Adalar / İstanbul</span>
-        <span>+90 555 123 45 67</span>
+        <span>+90 536 791 29 96</span>
         <span>info@adayalikonak.com</span>
       </div>
     </div>
@@ -684,7 +671,7 @@
       <h4 class="label-caps text-cream/50 mb-4">Bizi Takip Et</h4>
       <div class="flex gap-3">
         <a href="#" class="w-9 h-9 rounded-full bg-cream/10 flex items-center justify-center hover:bg-teal transition-colors cursor-pointer"><i data-lucide="camera" class="w-4 h-4"></i></a>
-        <a href="https://wa.me/905551234567" target="_blank" rel="noopener noreferrer" class="w-9 h-9 rounded-full bg-cream/10 flex items-center justify-center hover:bg-teal transition-colors cursor-pointer"><i data-lucide="message-circle" class="w-4 h-4"></i></a>
+        <a href="https://wa.me/905367912996" target="_blank" rel="noopener noreferrer" class="w-9 h-9 rounded-full bg-cream/10 flex items-center justify-center hover:bg-teal transition-colors cursor-pointer"><i data-lucide="message-circle" class="w-4 h-4"></i></a>
       </div>
     </div>
   </div>
@@ -775,7 +762,7 @@
     const message = encodeURIComponent(
       `Yeni Rezervasyon Talebi\nAd: ${name}\nTelefon: ${phone}\nGiriş Tarihi: ${date}\nKişi Sayısı: ${guests || 'belirtilmedi'}`
     );
-    window.open(`https://wa.me/905551234567?text=${message}`, '_blank');
+    window.open(`https://wa.me/905367912996?text=${message}`, '_blank');
   }
 
   function submitToWhatsApp() {
@@ -789,7 +776,7 @@
     const message = encodeURIComponent(
       `Yeni Rezervasyon Talebi\nAd: ${name}\nTelefon: ${phone}\nTarih: ${date}`
     );
-    window.open(`https://wa.me/905551234567?text=${message}`, '_blank');
+    window.open(`https://wa.me/905367912996?text=${message}`, '_blank');
   }
 
   // Lightbox
@@ -812,78 +799,14 @@
     document.getElementById('cookie-banner').classList.remove('open');
   }
 
-  // Site guide tour
-  const guideSteps = [
-    { selector: '#hero', title: 'Ada Yalı Konak\'a hoş geldin', text: 'Burası gerçek adres ve iletişim bilgileriyle çalışan bir butik konak. Fotoğraf ve fiyatların altında hep gerçek bilgiye ulaşabilirsin.' },
-    { selector: '#guven', title: 'Güven bilgileri burada', text: 'Misafir puanı, oda sayısı ve konum bilgisi en üstte. Şüphelendiğin her şeyi buradan doğrulayabilirsin.' },
-    { selector: '#odalar', title: 'Odaları ve galeriyi incele', text: 'Oda tiplerini, fiyatları gör. Alttaki galeri fotoğraflarına tıklayınca büyük halini açabilirsin.' },
-    { selector: '#yorumlar', title: 'Gerçek misafir yorumları', text: 'Senden önce kalan misafirlerin deneyimlerini oku, karar vermeden önce fikir edin.' },
-    { selector: '#iletisim', title: 'Bilgini güvenle bırak', text: 'Formu doldurup KVKK onay kutusunu işaretledikten sonra gönder, verilerin sadece rezervasyon için kullanılır.' },
-    { selector: '#whatsapp-float', title: 'Hızlı iletişim', text: 'Sorularını hemen WhatsApp\'tan sorabilirsin, 15 dakika içinde dönüş yapıyoruz.' },
-  ];
-  let guideIndex = 0;
-  let guideActive = false;
-
-  function startGuideTour() {
-    dismissGuidePrompt();
-    guideActive = true;
-    guideIndex = 0;
-    document.getElementById('guide-tooltip').classList.add('open');
-    renderGuideStep();
-  }
-
-  function renderGuideStep() {
-    clearGuideHighlight();
-    const step = guideSteps[guideIndex];
-    const target = document.querySelector(step.selector);
-    if (target) {
-      target.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      target.classList.add('tour-highlight');
-    }
-    document.getElementById('guide-step-label').textContent = `Adım ${guideIndex + 1} / ${guideSteps.length}`;
-    document.getElementById('guide-title').textContent = step.title;
-    document.getElementById('guide-text').textContent = step.text;
-    document.getElementById('guide-prev').style.visibility = guideIndex === 0 ? 'hidden' : 'visible';
-    document.getElementById('guide-next').textContent = guideIndex === guideSteps.length - 1 ? 'Bitir' : 'İleri';
-  }
-
-  function guideStep(direction) {
-    if (direction > 0 && guideIndex === guideSteps.length - 1) {
-      endGuideTour();
-      return;
-    }
-    guideIndex = Math.max(0, Math.min(guideSteps.length - 1, guideIndex + direction));
-    renderGuideStep();
-  }
-
-  function clearGuideHighlight() {
-    document.querySelectorAll('.tour-highlight').forEach(el => el.classList.remove('tour-highlight'));
-  }
-
-  function endGuideTour() {
-    guideActive = false;
-    clearGuideHighlight();
-    document.getElementById('guide-tooltip').classList.remove('open');
-    localStorage.setItem('ayk_guide_seen', '1');
-  }
-
-  function dismissGuidePrompt() {
-    document.getElementById('guide-prompt').classList.remove('open');
-    localStorage.setItem('ayk_guide_seen', '1');
-  }
-
   document.addEventListener('keydown', (e) => {
     if (e.key !== 'Escape') return;
     if (document.getElementById('lightbox').classList.contains('open')) closeLightbox();
-    if (guideActive) endGuideTour();
   });
 
   window.addEventListener('DOMContentLoaded', () => {
     if (!localStorage.getItem('ayk_cookie_consent')) {
       document.getElementById('cookie-banner').classList.add('open');
-    }
-    if (!localStorage.getItem('ayk_guide_seen')) {
-      setTimeout(() => document.getElementById('guide-prompt').classList.add('open'), 2500);
     }
   });
 </script>
