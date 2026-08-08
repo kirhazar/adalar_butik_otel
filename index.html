@@ -124,14 +124,20 @@
     animation:btn-shine-sweep 3s ease-in-out infinite;
   }
 
-  .step-circle{
-    width:4.5rem; height:4.5rem;
-    border-radius:9999px;
+  .step-photo-wrap{position:relative; z-index:10;}
+  .step-photo{
+    width:4.5rem; height:4.5rem; border-radius:9999px; object-fit:cover;
+    border:3px solid var(--surface);
+    box-shadow:0 10px 24px rgba(var(--teal-rgb),0.3);
+    display:block;
+  }
+  .step-badge{
+    position:absolute; bottom:-0.2rem; right:-0.2rem;
+    width:1.75rem; height:1.75rem; border-radius:9999px;
     display:flex; align-items:center; justify-content:center;
     background:linear-gradient(135deg, var(--teal), var(--teal-deep));
-    color:#fff;
-    box-shadow:0 10px 24px rgba(var(--teal-rgb),0.3);
-    position:relative; z-index:10;
+    color:#fff; font-size:0.68rem; font-weight:800;
+    box-shadow:0 4px 10px rgba(0,0,0,0.2);
   }
   .step-line{
     position:absolute; top:2.25rem; left:0; right:0;
@@ -158,6 +164,8 @@
 
   input:focus, textarea:focus{outline:2px solid var(--teal); outline-offset:2px;}
   a:focus-visible, button:focus-visible{outline:2px solid var(--teal); outline-offset:2px;}
+
+  input[type="date"]{color-scheme:light; accent-color:var(--teal); cursor:pointer;}
 
   /* Glass chip: translucent fill + soft shimmer, matching hero-style detail */
   @keyframes chip-shimmer{
@@ -448,19 +456,28 @@
       <div class="step-line hidden md:block"></div>
 
       <div class="reveal-item flex flex-col items-center">
-        <div class="step-circle font-serif font-extrabold tracking-tight text-xl mb-5">01</div>
+        <div class="step-photo-wrap mb-5">
+          <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=200&q=75" alt="WhatsApp'tan yaz" class="step-photo">
+          <span class="step-badge">01</span>
+        </div>
         <h3 class="font-serif font-bold tracking-tight text-xl mb-2">WhatsApp'tan Yaz</h3>
         <p class="text-ink-soft text-sm max-w-[15rem]">Tarihini ve kişi sayını ilet, 15 dakika içinde dönüş yapalım.</p>
       </div>
 
       <div class="reveal-item flex flex-col items-center">
-        <div class="step-circle font-serif font-extrabold tracking-tight text-xl mb-5">02</div>
+        <div class="step-photo-wrap mb-5">
+          <img src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=200&q=75" alt="Odanı seç" class="step-photo">
+          <span class="step-badge">02</span>
+        </div>
         <h3 class="font-serif font-bold tracking-tight text-xl mb-2">Odanı Seç</h3>
         <p class="text-ink-soft text-sm max-w-[15rem]">Deniz manzaralı ya da kara manzaralı, sana uygun olanı öneririz.</p>
       </div>
 
       <div class="reveal-item flex flex-col items-center">
-        <div class="step-circle font-serif font-extrabold tracking-tight text-xl mb-5">03</div>
+        <div class="step-photo-wrap mb-5">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Bah%C3%A7e_ve_Sandalye%2CB%C3%BCy%C3%BCkada_2015.jpg/400px-Bah%C3%A7e_ve_Sandalye%2CB%C3%BCy%C3%BCkada_2015.jpg" alt="Vapurdan in, konağa yürü" class="step-photo">
+          <span class="step-badge">03</span>
+        </div>
         <h3 class="font-serif font-bold tracking-tight text-xl mb-2">Vapurdan İn, Konağa Yürü</h3>
         <p class="text-ink-soft text-sm max-w-[15rem]">İskeleden 2 dakika, valizini taşımana bile gerek kalmaz.</p>
       </div>
@@ -561,16 +578,36 @@
 </section>
 
 <!-- CTA / İletişim -->
-<section id="iletisim" class="py-28 px-6 md:px-10 bg-surface border-t border-ink/10 text-center">
-  <div class="max-w-md mx-auto">
-    <h2 class="font-serif font-extrabold tracking-tight text-3xl md:text-5xl mb-5">Hafta sonun Adalar'da geçsin.</h2>
-    <p class="text-ink-soft mb-10">Bilgilerini bırak, seni WhatsApp'tan arayalım.</p>
+<section id="iletisim" class="py-28 px-6 md:px-10 bg-surface border-t border-ink/10">
+  <div class="max-w-6xl mx-auto reveal-group grid md:grid-cols-2 gap-12 items-center">
+    <div class="reveal-item">
+      <div class="rounded-lg overflow-hidden mb-8">
+        <img src="https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?w=1000&q=80" alt="Büyükada'da deniz manzarası" class="w-full h-72 md:h-96 object-cover">
+      </div>
+      <p class="label-caps mb-3">Rezervasyon</p>
+      <h2 class="font-serif font-extrabold tracking-tight text-3xl md:text-4xl mb-5">Adalar'da yerini ayırt, hafta sonun hazır olsun.</h2>
+      <p class="text-ink-soft mb-6 leading-relaxed">Ada Yalı Konak'ta rezervasyon yapmak birkaç dakika sürer. Formu doldur, seni WhatsApp'tan arayalım; tarihini, oda tercihini ve merak ettiğin her şeyi birlikte netleştirelim. Telefonla uğraşmana gerek yok.</p>
+      <ul class="space-y-3 text-sm text-ink-soft">
+        <li class="flex items-center gap-3"><i data-lucide="check-circle" class="w-4 h-4 text-teal flex-shrink-0"></i>15 dakika içinde WhatsApp'tan dönüş</li>
+        <li class="flex items-center gap-3"><i data-lucide="check-circle" class="w-4 h-4 text-teal flex-shrink-0"></i>Gerçek fotoğraf, gerçek fiyat, sürpriz yok</li>
+        <li class="flex items-center gap-3"><i data-lucide="check-circle" class="w-4 h-4 text-teal flex-shrink-0"></i>Bilgilerin sadece rezervasyon için kullanılır</li>
+      </ul>
+    </div>
 
-    <div class="card p-8 text-left">
+    <div class="reveal-item card p-8">
       <div class="space-y-4">
         <input id="lead-name" type="text" placeholder="Adınız Soyadınız" class="w-full px-4 py-3 rounded-md bg-cream border border-ink/15 text-sm">
         <input id="lead-phone" type="tel" placeholder="Telefon Numaranız" class="w-full px-4 py-3 rounded-md bg-cream border border-ink/15 text-sm">
-        <input id="lead-date" type="text" placeholder="Tarih (ör. 15-17 Ağustos)" class="w-full px-4 py-3 rounded-md bg-cream border border-ink/15 text-sm">
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label for="lead-checkin" class="label-caps block mb-1.5">Giriş Tarihi</label>
+            <input id="lead-checkin" type="date" class="w-full px-4 py-3 rounded-md bg-cream border border-ink/15 text-sm">
+          </div>
+          <div>
+            <label for="lead-checkout" class="label-caps block mb-1.5">Çıkış Tarihi</label>
+            <input id="lead-checkout" type="date" class="w-full px-4 py-3 rounded-md bg-cream border border-ink/15 text-sm">
+          </div>
+        </div>
         <div class="consent-row">
           <input id="lead-consent" type="checkbox">
           <label for="lead-consent">
@@ -597,7 +634,16 @@
     <div class="space-y-4">
       <input id="modal-name" type="text" placeholder="Adınız Soyadınız" class="w-full px-4 py-3 rounded-md bg-cream border border-ink/15 text-sm">
       <input id="modal-phone" type="tel" placeholder="Telefon Numaranız" class="w-full px-4 py-3 rounded-md bg-cream border border-ink/15 text-sm">
-      <input id="modal-date" type="text" placeholder="Giriş Tarihi (ör. 15 Ağustos)" class="w-full px-4 py-3 rounded-md bg-cream border border-ink/15 text-sm">
+      <div class="grid grid-cols-2 gap-3">
+        <div>
+          <label for="modal-checkin" class="label-caps block mb-1.5">Giriş Tarihi</label>
+          <input id="modal-checkin" type="date" class="w-full px-4 py-3 rounded-md bg-cream border border-ink/15 text-sm">
+        </div>
+        <div>
+          <label for="modal-checkout" class="label-caps block mb-1.5">Çıkış Tarihi</label>
+          <input id="modal-checkout" type="date" class="w-full px-4 py-3 rounded-md bg-cream border border-ink/15 text-sm">
+        </div>
+      </div>
       <select id="modal-guests" class="w-full px-4 py-3 rounded-md bg-cream border border-ink/15 text-sm text-ink-soft">
         <option value="">Kişi Sayısı (opsiyonel)</option>
         <option value="2 kişi">2 kişi</option>
@@ -750,6 +796,21 @@
     if (e.key === 'Escape') closeReservationModal();
   });
 
+  function formatTRDate(value) {
+    if (!value) return '';
+    const d = new Date(value + 'T00:00:00');
+    return d.toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' });
+  }
+
+  function formatDateRange(checkin, checkout) {
+    const inStr = formatTRDate(checkin);
+    const outStr = formatTRDate(checkout);
+    if (inStr && outStr) return `${inStr} - ${outStr}`;
+    if (inStr) return `${inStr} (giriş)`;
+    if (outStr) return `${outStr} (çıkış)`;
+    return 'belirtilmedi';
+  }
+
   function submitReservationModal() {
     if (!document.getElementById('modal-consent').checked) {
       alert('Devam etmek için lütfen KVKK Aydınlatma Metni onay kutusunu işaretleyin.');
@@ -757,10 +818,11 @@
     }
     const name = document.getElementById('modal-name').value;
     const phone = document.getElementById('modal-phone').value;
-    const date = document.getElementById('modal-date').value;
+    const checkin = document.getElementById('modal-checkin').value;
+    const checkout = document.getElementById('modal-checkout').value;
     const guests = document.getElementById('modal-guests').value;
     const message = encodeURIComponent(
-      `Yeni Rezervasyon Talebi\nAd: ${name}\nTelefon: ${phone}\nGiriş Tarihi: ${date}\nKişi Sayısı: ${guests || 'belirtilmedi'}`
+      `Yeni Rezervasyon Talebi\nAd: ${name}\nTelefon: ${phone}\nTarih: ${formatDateRange(checkin, checkout)}\nKişi Sayısı: ${guests || 'belirtilmedi'}`
     );
     window.open(`https://wa.me/905367912996?text=${message}`, '_blank');
   }
@@ -772,9 +834,10 @@
     }
     const name = document.getElementById('lead-name').value;
     const phone = document.getElementById('lead-phone').value;
-    const date = document.getElementById('lead-date').value;
+    const checkin = document.getElementById('lead-checkin').value;
+    const checkout = document.getElementById('lead-checkout').value;
     const message = encodeURIComponent(
-      `Yeni Rezervasyon Talebi\nAd: ${name}\nTelefon: ${phone}\nTarih: ${date}`
+      `Yeni Rezervasyon Talebi\nAd: ${name}\nTelefon: ${phone}\nTarih: ${formatDateRange(checkin, checkout)}`
     );
     window.open(`https://wa.me/905367912996?text=${message}`, '_blank');
   }
