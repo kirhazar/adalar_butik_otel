@@ -233,6 +233,49 @@
   .gallery-item img{width:100%; height:100%; object-fit:cover; transition:transform 400ms ease;}
   .gallery-item:hover img{transform:scale(1.06);}
 
+  /* Hero: slow Ken Burns drift on background photo */
+  .hero-media{animation:hero-kenburns 22s ease-in-out infinite alternate;}
+  @keyframes hero-kenburns{
+    0%{transform:scale(1) translate3d(0,0,0);}
+    100%{transform:scale(1.12) translate3d(-1.5%,-1.5%,0);}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .hero-media{animation:none;}
+  }
+
+  /* Hero: glass rating badge + secondary button + trust row + scroll cue */
+  .hero-badge{
+    display:inline-flex; align-items:center; gap:0.5rem;
+    padding:0.55rem 1.1rem; border-radius:9999px;
+    background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.32);
+    backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
+    color:#fff; font-size:0.76rem; letter-spacing:0.04em;
+  }
+
+  .btn-secondary{
+    background:rgba(255,255,255,0.08);
+    color:#fff;
+    border:1px solid rgba(255,255,255,0.45);
+    backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px);
+    transition:background 220ms ease, transform 260ms cubic-bezier(0.16,1,0.3,1);
+  }
+  .btn-secondary:hover{background:rgba(255,255,255,0.18); transform:translateY(-2px);}
+
+  .hero-trust-item{
+    display:inline-flex; align-items:center; gap:0.45rem;
+    color:rgba(255,255,255,0.85); font-size:0.72rem; letter-spacing:0.06em; text-transform:uppercase;
+  }
+
+  .hero-scroll-cue{
+    display:flex; flex-direction:column; align-items:center; gap:0.35rem;
+    color:rgba(255,255,255,0.7);
+    animation:hero-scroll-bounce 2.2s ease-in-out infinite;
+  }
+  @keyframes hero-scroll-bounce{
+    0%,100%{transform:translateY(0); opacity:0.55;}
+    50%{transform:translateY(7px); opacity:1;}
+  }
+
   #reservation-modal{
     position:fixed; inset:0; z-index:100;
     display:none;
@@ -380,20 +423,41 @@
 </nav>
 
 <!-- Hero -->
-<section id="hero" class="relative min-h-[100dvh] flex items-end">
+<section id="hero" class="relative min-h-[100dvh] flex flex-col overflow-hidden">
   <div class="absolute inset-0">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/B%C3%BCy%C3%BCkada%2C_Istanbul%2C_wooden_houses_1.jpg/1920px-B%C3%BCy%C3%BCkada%2C_Istanbul%2C_wooden_houses_1.jpg" alt="Büyükada'da tarihi ahşap konak, Adalar İstanbul" class="w-full h-full object-cover">
-    <div class="absolute inset-0 bg-gradient-to-t from-navy/75 via-navy/15 to-transparent"></div>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/B%C3%BCy%C3%BCkada%2C_Istanbul%2C_wooden_houses_1.jpg/1920px-B%C3%BCy%C3%BCkada%2C_Istanbul%2C_wooden_houses_1.jpg" alt="Büyükada'da tarihi ahşap konak, Adalar İstanbul" class="hero-media w-full h-full object-cover">
+    <div class="absolute inset-0 bg-gradient-to-t from-navy/80 via-navy/20 to-navy/40"></div>
   </div>
 
-  <div class="relative z-10 px-6 md:px-10 pb-24 w-full max-w-6xl mx-auto">
-    <p class="hero-eyebrow label-caps text-white/70 mb-4">Büyükada · Ada Yalı Konak</p>
-    <h1 class="hero-line font-serif font-extrabold tracking-tight text-4xl md:text-6xl lg:text-7xl text-white leading-[1.1] mb-6 max-w-2xl">Hafta sonu kaçamağına hazır.</h1>
-    <p class="hero-subtitle text-white/80 max-w-md mb-9 text-base md:text-lg">Ada Yalı Konak'ta deniz manzaralı odalar, sessiz bir bahçe ve vapur iskelesine 2 dakika mesafe seni bekliyor.</p>
+  <div class="relative z-10 flex-1 flex flex-col justify-between px-6 md:px-10 pt-28 pb-10 w-full max-w-6xl mx-auto">
+    <div class="hero-rating">
+      <span class="hero-badge"><i data-lucide="star" class="w-3.5 h-3.5 text-amber-400" fill="currentColor"></i>4.9 / 5 · 128 Misafir Yorumu</span>
+    </div>
 
-    <button type="button" onclick="openReservationModal()" class="hero-cta btn-primary cursor-pointer inline-flex items-center gap-3 px-7 py-3.5 rounded-full text-base font-medium w-fit">
-      <span class="inline-flex items-center gap-3">Rezervasyon Yap <i data-lucide="arrow-right" class="w-4 h-4"></i></span>
-    </button>
+    <div class="max-w-2xl">
+      <p class="hero-eyebrow label-caps text-white/70 mb-4">Büyükada · Ada Yalı Konak</p>
+      <h1 class="hero-line font-serif font-extrabold tracking-tight text-5xl md:text-6xl lg:text-7xl text-white leading-[1.08] mb-6">Hafta sonu kaçamağına hazır.</h1>
+      <p class="hero-subtitle text-white/80 max-w-md mb-8 text-base md:text-lg">Ada Yalı Konak'ta deniz manzaralı odalar, sessiz bir bahçe ve vapur iskelesine 2 dakika mesafe seni bekliyor.</p>
+
+      <div class="hero-cta flex flex-wrap items-center gap-4 mb-8">
+        <button type="button" onclick="openReservationModal()" class="btn-primary cursor-pointer inline-flex items-center gap-3 px-7 py-3.5 rounded-full text-base font-medium w-fit">
+          <span class="inline-flex items-center gap-3">Rezervasyon Yap <i data-lucide="arrow-right" class="w-4 h-4"></i></span>
+        </button>
+        <a href="#galeri" class="btn-secondary cursor-pointer inline-flex items-center gap-3 px-7 py-3.5 rounded-full text-base font-medium w-fit">
+          Galeriyi Gör <i data-lucide="image" class="w-4 h-4"></i>
+        </a>
+      </div>
+
+      <div class="hero-trust flex flex-wrap gap-x-6 gap-y-2">
+        <span class="hero-trust-item"><i data-lucide="bed-double" class="w-4 h-4"></i>12 Butik Oda</span>
+        <span class="hero-trust-item"><i data-lucide="ship" class="w-4 h-4"></i>Vapur İskelesine 2 Dk</span>
+        <span class="hero-trust-item"><i data-lucide="coffee" class="w-4 h-4"></i>Kahvaltı Dahil</span>
+      </div>
+    </div>
+
+    <a href="#guven" class="hero-scroll-cue mx-auto" aria-label="Aşağı kaydır">
+      <i data-lucide="chevron-down" class="w-5 h-5"></i>
+    </a>
   </div>
 </section>
 
@@ -858,10 +922,12 @@
     const ctx = gsap.context(() => {
       const heroTl = gsap.timeline({ defaults: { ease: 'power1.out' } });
       heroTl
-        .from('.hero-eyebrow', { y: 12, opacity: 0, duration: 0.35 })
+        .from('.hero-rating', { y: 12, opacity: 0, duration: 0.3 })
+        .from('.hero-eyebrow', { y: 12, opacity: 0, duration: 0.35 }, '-=0.1')
         .from('.hero-line', { y: 16, opacity: 0, duration: 0.4 }, '-=0.15')
         .from('.hero-subtitle', { y: 12, opacity: 0, duration: 0.35 }, '-=0.2')
-        .from('.hero-cta', { y: 12, opacity: 0, duration: 0.35 }, '-=0.2');
+        .from('.hero-cta', { y: 12, opacity: 0, duration: 0.35 }, '-=0.2')
+        .from('.hero-trust', { y: 12, opacity: 0, duration: 0.3 }, '-=0.15');
 
       document.querySelectorAll('.reveal-group').forEach((group) => {
         gsap.from(group.querySelectorAll('.reveal-item'), {
@@ -946,21 +1012,22 @@
 
   // Lightbox
   const galleryPhotos = [
-    { src: 'https://images.unsplash.com/photo-1590490360182-c33d57733427?w=1600&q=80', alt: 'Deniz manzaralı suit, oda genel görünümü' },
-    { src: 'https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=1600&q=80', alt: 'Bahçe odası genel görünümü' },
-    { src: 'https://images.unsplash.com/photo-1578683010236-d716f9a3f461?w=1600&q=80', alt: 'Camdan Adalar manzarası' },
-    { src: 'https://images.unsplash.com/photo-1620626011761-996317b8d101?w=1600&q=80', alt: 'Odada jakuzi ve banyo detayı' },
-    { src: 'https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=1600&q=80', alt: 'Bahçede kahvaltı' },
+    { src: 'https://images.unsplash.com/photo-1590490360182-c33d57733427?w=1600&q=80', mobileSrc: 'https://images.unsplash.com/photo-1590490360182-c33d57733427?w=1000&h=1500&fit=crop&crop=entropy&q=80', alt: 'Deniz manzaralı suit, oda genel görünümü' },
+    { src: 'https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=1600&q=80', mobileSrc: 'https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=1000&h=1500&fit=crop&crop=entropy&q=80', alt: 'Bahçe odası genel görünümü' },
+    { src: 'https://images.unsplash.com/photo-1578683010236-d716f9a3f461?w=1600&q=80', mobileSrc: 'https://images.unsplash.com/photo-1578683010236-d716f9a3f461?w=1000&h=1500&fit=crop&crop=entropy&q=80', alt: 'Camdan Adalar manzarası' },
+    { src: 'https://images.unsplash.com/photo-1620626011761-996317b8d101?w=1600&q=80', mobileSrc: 'https://images.unsplash.com/photo-1620626011761-996317b8d101?w=1000&h=1500&fit=crop&crop=entropy&q=80', alt: 'Odada jakuzi ve banyo detayı' },
+    { src: 'https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=1600&q=80', mobileSrc: 'https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=1000&h=1500&fit=crop&crop=entropy&q=80', alt: 'Bahçede kahvaltı' },
     { src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Bah%C3%A7e_ve_Sandalye%2CB%C3%BCy%C3%BCkada_2015.jpg/1280px-Bah%C3%A7e_ve_Sandalye%2CB%C3%BCy%C3%BCkada_2015.jpg', alt: 'Konağın bahçesi, Büyükada' },
-    { src: 'https://images.unsplash.com/photo-1519046904884-53103b34b206?w=1600&q=80', alt: 'Sahilde deniz keyfi' },
-    { src: 'https://images.unsplash.com/photo-1505577058444-a3dab90d4253?w=1600&q=80', alt: 'Butik oda detayı' },
+    { src: 'https://images.unsplash.com/photo-1519046904884-53103b34b206?w=1600&q=80', mobileSrc: 'https://images.unsplash.com/photo-1519046904884-53103b34b206?w=1000&h=1500&fit=crop&crop=entropy&q=80', alt: 'Sahilde deniz keyfi' },
+    { src: 'https://images.unsplash.com/photo-1505577058444-a3dab90d4253?w=1600&q=80', mobileSrc: 'https://images.unsplash.com/photo-1505577058444-a3dab90d4253?w=1000&h=1500&fit=crop&crop=entropy&q=80', alt: 'Butik oda detayı' },
   ];
   let galleryIndex = 0;
+  const isMobileViewport = () => window.matchMedia('(max-width: 767px)').matches;
 
   function renderLightboxImage() {
     const photo = galleryPhotos[galleryIndex];
     const img = document.getElementById('lightbox-img');
-    img.src = photo.src;
+    img.src = (isMobileViewport() && photo.mobileSrc) ? photo.mobileSrc : photo.src;
     img.alt = photo.alt;
     document.getElementById('lightbox-counter').textContent = `${galleryIndex + 1} / ${galleryPhotos.length}`;
   }
